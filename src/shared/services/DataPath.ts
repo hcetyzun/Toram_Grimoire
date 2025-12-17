@@ -15,27 +15,27 @@ export const enum DataPathIds {
 function DataPath(id: DataPathIds): string {
   switch (id) {
     case DataPathIds.Skill:
-      return 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=170573319&single=true&output=csv&range=A:Q'
+      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/skill/skill.csv'
     case DataPathIds.SkillMain:
-      return 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=2033454381&single=true&output=csv&range=A:D'
+      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/skill_main/skill_main.csv'
     case DataPathIds.Stats:
-      return 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=616452461&single=true&output=csv&range=A:F'
+      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/stats/stats.csv'
     case DataPathIds.CharacterStats:
-      return 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTHrEp60Q4BFKM2yI09FyJWZFKnxif0oZfTkWiXXL-7am6BWoAtN___hxKtFDkbofflHQgrON74qOdk/pub?gid=0&single=true&output=csv&range=A:I'
+      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/character_stats/character_stats.csv'
     case DataPathIds.Glossary:
-      return 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=1107380961&single=true&output=csv&range=A:C'
+      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/glossary/glossary.csv'
     case DataPathIds.Equipment:
-      return 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRwaGM9CClGkSw-6iUFmdOyIeI-_9i5RvIuHdSCTCUgFCk7GV4v1evt5C79JSG5P66ZGopM2-ZJJaEA/pub?gid=0&single=true&output=csv&range=A:I'
+      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/equipment/equipment.csv'
     case DataPathIds.Crystal:
-      return 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRwaGM9CClGkSw-6iUFmdOyIeI-_9i5RvIuHdSCTCUgFCk7GV4v1evt5C79JSG5P66ZGopM2-ZJJaEA/pub?gid=1665548440&single=true&output=csv&range=A:E'
+      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/crystal/crystal.csv'
     case DataPathIds.Enchant:
-      return 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ4beI9I-sFoTgbTaKeMHRVo3xNm3gc5nQ-MWb9u7dlzRk0QmnMoJwcaR0815IqP0t-9-htpS8mUdQ1/pub?gid=0&single=true&output=csv&range=A:O'
+      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/enchant/enchant.csv'
     case DataPathIds.Registlet:
-      return 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=1113738876&single=true&output=csv&range=A:I'
+      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/registlet/registlet.csv'
     case DataPathIds.Potion:
-      return 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRwaGM9CClGkSw-6iUFmdOyIeI-_9i5RvIuHdSCTCUgFCk7GV4v1evt5C79JSG5P66ZGopM2-ZJJaEA/pub?gid=1555730463&single=true&output=csv&range=A:E'
+      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/potion/potion.csv'
     case DataPathIds.Quest:
-      return 'https://docs.google.com/spreadsheets/d/1hh66cAWlDk2uJlAbv2ivdrRNQYuK4RPuWF4iB48T31g/pub?gid=1111992028&single=true&output=csv&range=A:I'
+      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/quest/quest.csv'
   }
 }
 
@@ -46,33 +46,33 @@ function DataPathLang(id: DataPathIds): (string | null)[] {
   switch (id) {
     case DataPathIds.Skill:
       return [
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=170573319&single=true&output=csv&range=R:R',
+        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/en/skill_en.csv',
         null,
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=170573319&single=true&output=csv&range=S:S',
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=170573319&single=true&output=csv&range=T:T',
+        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/ja/skill_ja.csv',
+        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/zh_cn/skill_cn.csv',
       ]
     case DataPathIds.SkillMain:
       return [
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=2033454381&single=true&output=csv&range=F:F',
+        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/en/skillmain_en.csv',
         null,
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=2033454381&single=true&output=csv&range=G:G',
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=2033454381&single=true&output=csv&range=H:H',
+        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/ja/skillmain_ja.csv',
+        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/zh_cn/skillmain_cn.csv',
       ]
     case DataPathIds.Stats:
       return [
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=1353062937&single=true&output=csv&range=B:C',
+        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/en/stats_en.csv',
         null,
         null,
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=1353062937&single=true&output=csv&range=F:G',
+        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/zh_cn/stats_cn.csv',
       ]
     case DataPathIds.CharacterStats:
       return [null, null, null, null]
     case DataPathIds.Glossary:
       return [
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=1107380961&single=true&output=csv&range=D:E',
+        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/en/glossary_en.csv',
         null,
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=1107380961&single=true&output=csv&range=F:G',
-        'https://docs.google.com/spreadsheets/d/e/2PACX-1vS_XhF85gZ5sd9AtOMSM6JY4OuQwFlD6kToQynQ4bMq_fiaUNr26c7dbrIs6WeWnscKe1rau1npWYe7/pub?gid=1107380961&single=true&output=csv&range=H:I',
+        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/ja/glossary_ja.csv',
+        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/zh_cn/glossary_cn.csv',
       ]
   }
   return []
