@@ -15,27 +15,27 @@ export const enum DataPathIds {
 function DataPath(id: DataPathIds): string {
   switch (id) {
     case DataPathIds.Skill:
-      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/skill/skill.csv'
+      return 'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/skill/skill.csv'
     case DataPathIds.SkillMain:
-      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/skill_main/skill_main.csv'
+      return 'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/skill_main/skill_main.csv'
     case DataPathIds.Stats:
-      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/stats/stats.csv'
+      return 'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/stats/stats.csv'
     case DataPathIds.CharacterStats:
-      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/character_stats/character_stats.csv'
+      return 'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/character_stats/character_stats.csv'
     case DataPathIds.Glossary:
-      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/glossary/glossary.csv'
+      return 'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/glossary/glossary.csv'
     case DataPathIds.Equipment:
-      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/equipment/equipment.csv'
+      return 'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/equipment/equipment.csv'
     case DataPathIds.Crystal:
-      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/crystal/crystal.csv'
+      return 'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/crystal/crystal.csv'
     case DataPathIds.Enchant:
-      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/enchant/enchant.csv'
+      return 'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/enchant/enchant.csv'
     case DataPathIds.Registlet:
-      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/registlet/registlet.csv'
+      return 'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/registlet/registlet.csv'
     case DataPathIds.Potion:
-      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/potion/potion.csv'
+      return 'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/potion/potion.csv'
     case DataPathIds.Quest:
-      return 'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/quest/quest.csv'
+      return 'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/quest/quest.csv'
   }
 }
 
@@ -46,33 +46,33 @@ function DataPathLang(id: DataPathIds): (string | null)[] {
   switch (id) {
     case DataPathIds.Skill:
       return [
-        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/en/skill_en.csv',
+        'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/lang/en/skill_en.csv',
         null,
-        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/ja/skill_ja.csv',
-        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/zh_cn/skill_cn.csv',
+        'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/lang/ja/skill_ja.csv',
+        'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/lang/zh_cn/skill_cn.csv',
       ]
     case DataPathIds.SkillMain:
       return [
-        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/en/skillmain_en.csv',
+        'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/lang/en/skillmain_en.csv',
         null,
-        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/ja/skillmain_ja.csv',
-        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/zh_cn/skillmain_cn.csv',
+        'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/lang/ja/skillmain_ja.csv',
+        'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/lang/zh_cn/skillmain_cn.csv',
       ]
     case DataPathIds.Stats:
       return [
-        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/en/stats_en.csv',
+        'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/lang/en/stats_en.csv',
         null,
         null,
-        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/zh_cn/stats_cn.csv',
+        'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/lang/zh_cn/stats_cn.csv',
       ]
     case DataPathIds.CharacterStats:
       return [null, null, null, null]
     case DataPathIds.Glossary:
       return [
-        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/en/glossary_en.csv',
+        'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/lang/en/glossary_en.csv',
         null,
-        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/ja/glossary_ja.csv',
-        'https://raw.githubusercontent.com/hcetyzun/Data-mirror/main/data/lang/zh_cn/glossary_cn.csv',
+        'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/lang/ja/glossary_ja.csv',
+        'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/lang/zh_cn/glossary_cn.csv',
       ]
   }
   return []
