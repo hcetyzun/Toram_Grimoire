@@ -202,7 +202,8 @@ registerRoute(
   }
 
   // Register this strategy to handle all navigations.
-  registerRoute(/^https:\/\/docs\.google\.com\/spreadsheets\/.+output=csv.*/, handler)
+  //registerRoute(/^https:\/\/docs\.google\.com\/spreadsheets\/.+output=csv.*/, handler)
+  registerRoute(/^https:\/\/cdn\.jsdelivr\.net\/gh\/hcetyzun\/Data-mirror@main\/data\/.+\.csv/, handler)
 }
 
 self.addEventListener('message', event => {
