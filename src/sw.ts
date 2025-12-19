@@ -189,7 +189,7 @@ registerRoute(
 
       const newRes = new Response(csvstr, {
         headers: new Headers({
-          'Content-Type': 'text/csv; charset=utf-8',
+          'Content-Type': 'text/csv',
         }),
       })
       const cacheRes = newRes.clone()
