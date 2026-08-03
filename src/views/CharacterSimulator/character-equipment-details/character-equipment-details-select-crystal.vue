@@ -105,27 +105,22 @@ const getCrystalCategoryTitle = (categoryId: number): string => {
 }
 
 const currentCrystalCategorys: ComputedRef<CategoryItem[]> = computed(() => {
-  return allCrystalCategorys
-    .filter(category => availableCrystalCategoryIds.value.includes(category.id))
-    .map(category => {
-      const text = searchText.value.toLowerCase()
-      const categoryAllCrystalEnhancers = crystalCategoryAllCrystalEnhancers.get(category.id)!
+  const availableCategorys = allCrystalCategorys.filter(category =>
+    availableCrystalCategoryIds.value.includes(category.id)
+  )
 
+  const text = searchText.value.toLowerCase()
+  let resultCategoryItems: CategoryItem[]
+
+  if (text !== '') {
+    resultCategoryItems = availableCategorys.map(category => {
       const crystals = category.crystals.filter(crystal => {
-        if (
-          onlyshowLastCrystal.value &&
-          !checkCrystalSelected(crystal) &&
-          (crystal.stats.length <= 1 || categoryAllCrystalEnhancers.has(crystal.name))
-        ) {
-          return false
-        }
         if (crystal.name.toLowerCase().includes(text)) {
           return true
         }
-        const relatedCrystals = crystal.getRelatedCrystals(category.crystals)
-        return [...relatedCrystals.enhancers, ...relatedCrystals.prependeds].some(item =>
-          item.name.toLowerCase().includes(text)
-        )
+        return crystal
+          .getRelatedCrystalsLists(category.crystals)
+          .some(item => item.name.toLowerCase().includes(text))
       })
 
       return {
@@ -134,7 +129,34 @@ const currentCrystalCategorys: ComputedRef<CategoryItem[]> = computed(() => {
         crystals,
       }
     })
-    .filter(category => category.crystals.length !== 0)
+  } else if (onlyshowLastCrystal.value) {
+    resultCategoryItems = availableCategorys.map(category => {
+      const categoryAllCrystalEnhancers = crystalCategoryAllCrystalEnhancers.get(category.id)!
+
+      const crystals = category.crystals.filter(crystal => {
+        if (checkCrystalSelected(crystal)) {
+          return true
+        }
+        return crystal.stats.length > 1 && !categoryAllCrystalEnhancers.has(crystal.name)
+      })
+
+      return {
+        id: category.id,
+        title: getCrystalCategoryTitle(category.id),
+        crystals,
+      }
+    })
+  } else {
+    resultCategoryItems = availableCategorys.map(category => {
+      return {
+        id: category.id,
+        title: getCrystalCategoryTitle(category.id),
+        crystals: category.crystals.slice(),
+      }
+    })
+  }
+
+  return resultCategoryItems.filter(category => category.crystals.length !== 0)
 })
 
 const toggleCrystal = (crystal: BagCrystal | null) => {
@@ -152,10 +174,7 @@ const toggleCrystal = (crystal: BagCrystal | null) => {
 
 const currentEquipmentRelatedCrystals = computed(() => {
   return props.equipment.crystals
-    .map(crystal => {
-      const data = crystal.origin.getRelatedCrystals(Grimoire.Items.crystals)
-      return [...data.enhancers, ...data.prependeds]
-    })
+    .map(crystal => crystal.origin.getRelatedCrystalsLists(Grimoire.Items.crystals))
     .flat()
 })
 </script>

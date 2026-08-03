@@ -173,6 +173,11 @@ class BagCrystal extends BagItem {
       prependeds,
     }
   }
+
+  getRelatedCrystalsLists(crystals: BagCrystal[]) {
+    const relatedCrystals = this.getRelatedCrystals(crystals)
+    return [...relatedCrystals.enhancers, ...relatedCrystals.prependeds]
+  }
 }
 
 class BagItemRecipeMaterial {

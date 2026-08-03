@@ -233,10 +233,9 @@ const resultCrystals = computed(() => {
       }
       const categoryCrystals = categoryCrystalsMap.get(crystal.origin.category)
       if (categoryCrystals) {
-        const relatedCrystals = crystal.origin.getRelatedCrystals(categoryCrystals)
-        return [...relatedCrystals.enhancers, ...relatedCrystals.prependeds].some(item =>
-          item.name.toLowerCase().includes(text)
-        )
+        return crystal.origin
+          .getRelatedCrystalsLists(categoryCrystals)
+          .some(item => item.name.toLowerCase().includes(text))
       }
       return false
     })
