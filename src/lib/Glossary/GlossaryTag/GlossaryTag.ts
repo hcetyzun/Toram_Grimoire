@@ -6,7 +6,8 @@ class GlossaryTag {
     this.name = name
     this.rows = []
   }
-  appendRow(type: string, value: string) {
+
+  appendRow(type: string, value: string): GlossaryTagRow {
     const frame = new GlossaryTagRow(type, value)
     this.rows.push(frame)
     return frame
@@ -21,7 +22,8 @@ class GlossaryTagRow {
     this.type = type
     this.value = [value]
   }
-  appendValue(value: string) {
+
+  appendValue(value: string): void {
     if (value) {
       this.value.push(value)
     }

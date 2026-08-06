@@ -55,44 +55,46 @@
         </div>
         <div>
           <table class="border-separate border-spacing-x-4 border-spacing-y-2">
-            <tr>
-              <td class="text-gray-40 text-right text-sm">
-                {{ t('registlet-query.detail.obtain-levels') }}
-              </td>
-              <td class="text-primary-60">
-                <div v-if="item.obtainLevels.length > 0" class="flex items-center space-x-2">
-                  <div
-                    v-for="level in item.obtainLevels"
-                    :key="level"
-                    class="bg-emerald-5 text-emerald-60 rounded-sm px-2"
-                  >
-                    {{ level }}
+            <tbody>
+              <tr>
+                <td class="text-gray-40 text-right text-sm">
+                  {{ t('registlet-query.detail.obtain-levels') }}
+                </td>
+                <td class="text-primary-60">
+                  <div v-if="item.obtainLevels.length > 0" class="flex items-center space-x-2">
+                    <div
+                      v-for="level in item.obtainLevels"
+                      :key="level"
+                      class="bg-emerald-5 text-emerald-60 rounded-sm px-2"
+                    >
+                      {{ level }}
+                    </div>
                   </div>
-                </div>
-                <template v-else>
-                  {{ t('registlet-query.detail.obtain-levels-all') }}
-                </template>
-              </td>
-            </tr>
-            <tr>
-              <td class="text-gray-40 text-right text-sm">
-                {{ t('registlet-query.detail.max-level') }}
-              </td>
-              <td class="text-primary-60">
-                {{ item.maxLevel }}
-              </td>
-            </tr>
-            <tr>
-              <td class="text-gray-40 text-right text-sm">
-                {{ t('registlet-query.detail.powder-cost') }}
-              </td>
-              <td class="text-primary-60">
-                <span>{{ item.powderCost }}</span>
-                <span class="text-blue-40 ml-3">
-                  {{ `(${item.powderCostAdditional})` }}
-                </span>
-              </td>
-            </tr>
+                  <template v-else>
+                    {{ t('registlet-query.detail.obtain-levels-all') }}
+                  </template>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-gray-40 text-right text-sm">
+                  {{ t('registlet-query.detail.max-level') }}
+                </td>
+                <td class="text-primary-60">
+                  {{ item.maxLevel }}
+                </td>
+              </tr>
+              <tr>
+                <td class="text-gray-40 text-right text-sm">
+                  {{ t('registlet-query.detail.powder-cost') }}
+                </td>
+                <td class="text-primary-60">
+                  <span>{{ item.powderCost }}</span>
+                  <span class="text-blue-40 ml-3">
+                    {{ `(${item.powderCostAdditional})` }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>

@@ -6,7 +6,7 @@
     <div>
       <cy-list-item
         v-for="option in searchResult"
-        :key="option.origin.statId(option.type)"
+        :key="option.origin.getStatId(option.type)"
         :selected="
           !!selectedStatItem &&
           selectedStatItem.origin === option.origin &&

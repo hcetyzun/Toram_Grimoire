@@ -35,13 +35,13 @@ const statOptions = (() => {
         .filter(type => !(type === StatTypes.Multiplier && !stat.hasMultiplier))
         .forEach(type => {
           const option = {
-            id: stat.statId(type),
+            id: stat.getStatId(type),
             origin: stat,
             text: stat.title(type),
             type,
           }
           options.push(option)
-          optionsMap.set(stat.statId(type), option)
+          optionsMap.set(stat.getStatId(type), option)
         })
     })
   return options
@@ -62,7 +62,7 @@ const currentEquipmentStatOptions: ComputedRef<Map<string, StatRestriction>> = c
   const stats = props.equipment.stats
   const statsMap = new Map<string, StatRestriction>()
   statOptions.forEach(option => {
-    const equipmentStat = stats.find(stat => option.origin.baseEqual(stat, option.type))
+    const equipmentStat = stats.find(stat => option.origin.baseEquals(stat, option.type))
     if (equipmentStat) {
       statsMap.set(option.id, equipmentStat)
     }
@@ -90,7 +90,7 @@ const toggleStat = (option: StatOption) => {
 <template>
   <CommonSearchableItems
     v-model:search-text="searchText"
-    :placeholder="t('character-simulator.equipment-basic-editor.edit-stats.search-placeholder')"
+    :placeholder="t('global.search')"
     :items="statsSearchResult"
     :selected-item-ids="currentEquipmentStatOptionIds"
     @select-item="toggleStat"

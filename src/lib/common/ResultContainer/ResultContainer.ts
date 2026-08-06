@@ -42,11 +42,11 @@ abstract class ResultContainerBase implements InstanceWithId {
     this.instanceId = ResultContainerBase._idGenerator.generate()
   }
 
-  markEmpty() {
+  markEmpty(): void {
     this._isEmpty = true
   }
 
-  isEmpty() {
+  isEmpty(): boolean {
     return this._isEmpty
   }
 }
@@ -68,7 +68,7 @@ class ResultContainer extends ResultContainerBase {
     this._result = value.toString()
   }
 
-  override get result() {
+  override get result(): string {
     return this._result
   }
 
@@ -76,7 +76,7 @@ class ResultContainer extends ResultContainerBase {
    * Modify value of result
    * @param handler
    */
-  override handle(handler: ResultHandler) {
+  override handle(handler: ResultHandler): void {
     this._result = handler(this._result)
   }
 
@@ -146,15 +146,15 @@ class TextResultContainer extends ResultContainerBase {
     this.value = value
   }
 
-  override get result() {
+  override get result(): string {
     return this.parts.map(part => (typeof part === 'string' ? part : part.result)).join('')
   }
 
-  override handle(handler: ResultHandler) {
+  override handle(handler: ResultHandler): void {
     this.containers.forEach(container => container.handle(handler))
   }
 
-  handleStrings(handler: (value: string) => string) {
+  handleStrings(handler: (value: string) => string): void {
     this.parts.forEach((part, idx) => {
       if (typeof part === 'string') {
         this.parts[idx] = handler(part)
@@ -190,7 +190,7 @@ class TextResultContainerPart {
     this.unit = unit
   }
 
-  get hasMultipleParts() {
+  get hasMultipleParts(): boolean {
     return this.parts.length > 1
   }
 
@@ -203,7 +203,7 @@ class TextResultContainerPart {
     return this.value
   }
 
-  get metadata() {
+  get metadata(): Map<string, string> {
     if (!this._metadata) {
       this._metadata = new Map()
     }

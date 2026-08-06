@@ -21,7 +21,7 @@
     <div v-for="category in validCategorys" :key="category.origin.title" class="relative mb-2 p-1">
       <div
         v-if="category.origin.weaponOnly && !isWeapon"
-        class="absolute left-0 top-0 z-1 h-full w-full cursor-not-allowed bg-white opacity-50"
+        class="z-1 absolute left-0 top-0 h-full w-full cursor-not-allowed bg-white opacity-50"
       />
       <cy-icon-text class="w-full" small text-color="fuchsia-60">
         {{ category.origin.title }}
@@ -41,7 +41,7 @@
           <span>
             {{ item.origin.statBase.title(item.type) }}
           </span>
-          <span class="ml-2 text-sm text-primary-30">
+          <span class="text-primary-30 ml-2 text-sm">
             {{ item.origin.getPotential(item.type, tmpEquipment) + 'pt' }}
           </span>
         </cy-button-check>
@@ -115,7 +115,7 @@ const categorys = (() => {
           return
         }
         items.push({
-          id: item.statBase.statId(type),
+          id: item.statBase.getStatId(type),
           type: type,
           origin: item,
         })

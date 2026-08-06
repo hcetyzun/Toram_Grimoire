@@ -9,7 +9,7 @@
       {{ t('enchant-doll.select-positives.caption') }}
     </div>
     <div class="my-4 flex justify-center">
-      <div class="mt-2 max-w-xs border border-fuchsia-60">
+      <div class="border-fuchsia-60 mt-2 max-w-xs border">
         <template v-if="doll.positiveStats.length !== 0">
           <cy-list-item v-for="stat in doll.positiveStats" :key="stat.statId">
             <cy-icon-text :text-color="stat.value >= 0 ? 'primary-90' : 'orange-60'" class="w-full">
@@ -76,15 +76,15 @@
             @click="appendShortHandStats"
           />
         </div>
-        <div v-if="shortHandStatItems.length > 0" class="px-1 pt-1 text-primary-50">
+        <div v-if="shortHandStatItems.length > 0" class="text-primary-50 px-1 pt-1">
           <div
             v-for="{ origin, type, value } in shortHandStatItems"
-            :key="origin.statBase.statId(type)"
+            :key="origin.statBase.getStatId(type)"
           >
             {{ origin.statBase.show(type, value) }}
           </div>
         </div>
-        <div v-else class="text-center text-primary-30">ex: AD3CD%CDC</div>
+        <div v-else class="text-primary-30 text-center">ex: AD3CD%CDC</div>
       </div>
     </div>
   </EnchantDollStepWrapper>
