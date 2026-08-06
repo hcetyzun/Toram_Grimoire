@@ -28,11 +28,11 @@ watch(
 <template>
   <div class="flex h-full w-full flex-col py-2">
     <template v-if="equipment.supportCrystal">
-      <template v-if="equipment.crystals.length > 0">
-        <div class="mb-3 flex justify-end">
-          <CommonEditModeButton v-model:is-editing="isEditing" />
-        </div>
-        <div v-if="!isEditing" class="max-w-[15rem] space-y-5">
+      <div class="mb-3 flex justify-end">
+        <CommonEditModeButton v-model:is-editing="isEditing" />
+      </div>
+      <template v-if="!isEditing">
+        <div v-if="equipment.crystals.length > 0" class="max-w-[15rem] space-y-5">
           <CharacterEquipmentDetailsCrystal
             v-for="crystal in equipment.crystals"
             :key="crystal.id"
@@ -40,11 +40,11 @@ watch(
             @remove="equipment.removeCrystal($event)"
           />
         </div>
-        <CharacterEquipmentDetailsSelectCrystal v-else :equipment="equipment" />
+        <div v-else class="text-primary-60 py-2 text-sm">
+          {{ t('character-simulator.select-crystals.crystal-empty-tips') }}
+        </div>
       </template>
-      <div v-else class="text-primary-60 py-2 text-sm">
-        {{ t('character-simulator.select-crystals.crystal-empty-tips') }}
-      </div>
+      <CharacterEquipmentDetailsSelectCrystal v-else :equipment="equipment" />
     </template>
     <div v-else class="text-primary-60 text-sm">
       {{ t('character-simulator.select-crystals.equipment-type-not-support-crystal-tips') }}
