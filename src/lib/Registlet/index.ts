@@ -18,6 +18,7 @@ export default class RegistletSystem {
 
   private _idItemMap!: Map<string, RegistletItemBase>
   private _skillItemMap!: Map<Skill, RegistletItemBaseSkill[]>
+  private _allObtainLevelList!: number[]
 
   constructor() {
     this.skillCategory = markRaw(
@@ -59,5 +60,21 @@ export default class RegistletSystem {
       })
     }
     return this._skillItemMap.get(skill) ?? []
+  }
+
+  getAllObtainLevelList() {
+    if (!this._allObtainLevelList) {
+      const tmpSet = new Set<number>()
+      const handle = (items: RegistletItemBase[]) => {
+        items.forEach(item => {
+          item.obtainLevels.forEach(level => tmpSet.add(level))
+        })
+      }
+      handle(this.skillCategory.items)
+      handle(this.statCategory.items)
+      handle(this.specialCategory.items)
+      this._allObtainLevelList = [...tmpSet].sort((item1, item2) => item1 - item2)
+    }
+    return this._allObtainLevelList
   }
 }
