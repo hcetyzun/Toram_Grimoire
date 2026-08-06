@@ -39,7 +39,7 @@ class MainQuestSection extends QuestBase {
     return this.skippableSubSection !== ''
   }
 
-  isEqual(section: MainQuestSection) {
+  equalsTo(section: MainQuestSection): boolean {
     return this.index === section.index
   }
 }

@@ -34,43 +34,45 @@
         />
       </template>
       <template #side-contents>
-        <AppLayoutBottomContent v-if="displayModeMenuVisible" class="px-3 py-2">
+        <AppLayoutBottomContent v-if="displayModeMenuVisible" class="px-4 py-2.5">
           <div class="text-gray-40 text-sm">
             {{ t('registlet-query.display-mode.title') }}
           </div>
-          <div class="mt-1">
-            <cy-button-check
+          <div class="mt-1 flex">
+            <cy-button-radio
               :selected="state.displayMode === 'category'"
               @click="state.displayMode = 'category'"
             >
               {{ t('registlet-query.display-mode.category') }}
-            </cy-button-check>
-          </div>
-          <div>
-            <cy-button-check
+            </cy-button-radio>
+            <cy-button-radio
               :selected="state.displayMode === 'obtain-levels'"
               @click="state.displayMode = 'obtain-levels'"
             >
               {{ t('registlet-query.display-mode.obtain-levels') }}
-            </cy-button-check>
+            </cy-button-radio>
           </div>
+          <div class="text-gray-40 mt-4 text-sm">
+            {{ t('registlet-query.detail.obtain-levels') }}
+          </div>
+          <cy-button-radio-group
+            v-model:value="searchObtainLevel"
+            :options="searchObtainLevelOptions"
+            class="mt-1"
+          />
         </AppLayoutBottomContent>
       </template>
     </AppLayoutBottom>
   </AppLayoutMain>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'RegistletQuery',
-}
-</script>
-
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import Grimoire from '@/shared/Grimoire'
+import { useToggle } from '@/shared/setup/State'
+import { fuzzySearch, prepareFuzzySearch } from '@/shared/utils/data/dataCommon.ts'
 
 import { RegistletItemBase } from '@/lib/Registlet/RegistletItem'
 
@@ -81,22 +83,33 @@ import AppLayoutMain from '@/components/app-layout/app-layout-main.vue'
 import RegistletQueryResult from './registlet-query-result.vue'
 
 import { useRegistletQueryState } from './setup'
-import { useToggle } from '@/shared/setup/State'
 
-const Registlet = Grimoire.Registlet!
+defineOptions({
+  name: 'RegistletQuery',
+})
 
 const registletItems: RegistletItemBase[] = [
-  ...Registlet.statCategory.items,
-  ...Registlet.specialCategory.items,
-  ...Registlet.skillCategory.items,
+  ...Grimoire.Registlet.statCategory.items,
+  ...Grimoire.Registlet.specialCategory.items,
+  ...Grimoire.Registlet.skillCategory.items,
 ]
 
 const { t } = useI18n()
+const allObtainLevelList = Grimoire.Registlet.getAllObtainLevelList()
+const SEARCH_OBTAIN_LEVEL_NONE = 0
+const searchObtainLevelOptions = [SEARCH_OBTAIN_LEVEL_NONE, ...allObtainLevelList].map(level => ({
+  text:
+    level === SEARCH_OBTAIN_LEVEL_NONE
+      ? t('registlet-query.detail.obtain-levels-all')
+      : level.toString(),
+  value: level,
+}))
 
 const displayModeMenuVisible = ref(false)
 const toggleDisplayModeMenuVisible = useToggle(displayModeMenuVisible)
 
 const searchText = ref('')
+const searchObtainLevel = ref(SEARCH_OBTAIN_LEVEL_NONE)
 
 const state = useRegistletQueryState()
 
@@ -131,15 +144,21 @@ const currentModeItems = computed(() => {
 })
 
 const currentItems = computed(() => {
-  if (!searchText.value) {
+  if (!searchText.value && searchObtainLevel.value === SEARCH_OBTAIN_LEVEL_NONE) {
     return currentModeItems.value
   }
-  const text = searchText.value.toLowerCase()
+  const text = prepareFuzzySearch(searchText.value)
   return currentModeItems.value.filter(item => {
-    if (item.name.toLowerCase().includes(text)) {
+    if (
+      searchObtainLevel.value !== SEARCH_OBTAIN_LEVEL_NONE &&
+      !item.obtainLevels.includes(searchObtainLevel.value)
+    ) {
+      return false
+    }
+    if (fuzzySearch(text, item.name)) {
       return true
     }
-    return item.rows.some(row => row.value.toLowerCase().includes(text))
+    return item.rows.some(row => fuzzySearch(text, row.value))
   })
 })
 </script>

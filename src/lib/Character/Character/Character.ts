@@ -79,32 +79,32 @@ class Character implements CharacterBindingBuild {
   equipmentField(type: EquipmentFieldTypes, index: number = 0): EquipmentField {
     return this.equipmentFields.find(item => item.type === type && item.index === index)!
   }
-  fieldEquipment(type: EquipmentFieldTypes) {
+  fieldEquipment(type: EquipmentFieldTypes): CharacterEquipment | null {
     return this.equipmentField(type)?.equipment ?? null
   }
-  hasOptinalBaseStat() {
+  hasOptinalBaseStat(): boolean {
     return this._optinalBaseStat ? true : false
   }
-  setOptionalBaseStat(name: CharacterBaseStatTypes) {
+  setOptionalBaseStat(name: CharacterBaseStatTypes): void {
     this._optinalBaseStat = new CharacterBaseStat(name)
   }
-  clearOptinalBaseStat() {
+  clearOptinalBaseStat(): void {
     this._optinalBaseStat = null
   }
-  baseStat(name: CharacterBaseStatTypes) {
+  baseStat(name: CharacterBaseStatTypes): CharacterBaseStat | null {
     if (this._optinalBaseStat !== null && this._optinalBaseStat.name === name) {
       return this._optinalBaseStat
     }
     return this._baseStats.find(bstat => bstat.name === name) ?? null
   }
-  baseStatValue(name: CharacterBaseStatTypes) {
+  baseStatValue(name: CharacterBaseStatTypes): number {
     const stat = this.baseStat(name)
     return stat ? stat.value : 0
   }
-  checkFieldEquipmentType(fieldType: EquipmentFieldTypes, eqType: EquipmentTypes | null) {
+  checkFieldEquipmentType(fieldType: EquipmentFieldTypes, eqType: EquipmentTypes | null): boolean {
     return eqType === null || this.equipmentField(fieldType).equipmentType === eqType
   }
-  subWeaponValid(subType: EquipmentTypes, mainType?: EquipmentTypes) {
+  subWeaponValid(subType: EquipmentTypes, mainType?: EquipmentTypes): boolean {
     const validSubs: EquipmentTypes[] = []
     mainType = mainType ?? this.equipmentField(EquipmentFieldTypes.MainWeapon).equipmentType
     switch (mainType) {
@@ -136,7 +136,7 @@ class Character implements CharacterBindingBuild {
     return validSubs.includes(subType)
   }
 
-  clone() {
+  clone(): Character {
     const chara = new Character(this.name + '*')
     chara.level = this.level
     this.normalBaseStats.forEach(bstat => {

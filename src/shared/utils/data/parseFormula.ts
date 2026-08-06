@@ -1,5 +1,6 @@
 import jsep from 'jsep'
 
+import { CommonLogger } from '@/shared/services/Logger'
 import { isNumberString, lastChar } from '@/shared/utils/string'
 import { type AnyFunction } from '@/shared/utils/type'
 
@@ -271,9 +272,9 @@ function handleFormula(
   formulaStr: string,
   {
     vars = {},
-    texts = {},
+    texts,
     methods = {},
-    getters = {},
+    getters,
     toNumber = false,
     toBoolean = false,
     defaultValue = null,
@@ -293,39 +294,64 @@ function handleFormula(
   }
   const originalFormulaStr = formulaStr
 
-  const gettersMap = getGettersMap<string | number>(getters)
-  const gettersMethodsRoot = '__HANDLE_FORMULA_GETTERS__'
-  const gettersAry = varMapToArray(gettersMap)
-  gettersAry.forEach(([key]) => {
-    // convert to method
-    const methodName = `${gettersMethodsRoot}['${key}']`
-    formulaStr = formulaStr.replace(handleReplacedKey(key), `${methodName}()`)
-  })
+  type GettersContext = {
+    gettersAry: [string, () => string | number][]
+    gettersMethodsRoot: string
+    paramGetters: HandleFormulaGetters
+  }
+  let gettersContext: GettersContext | null = null
+  if (getters) {
+    const gettersMap = getGettersMap<string | number>(getters)
+    const gettersMethodsRoot = '__HANDLE_FORMULA_GETTERS__'
+    const gettersAry = varMapToArray(gettersMap)
+    gettersAry.forEach(([key]) => {
+      // convert to method
+      const methodName = `${gettersMethodsRoot}['${key}']`
+      formulaStr = formulaStr.replace(handleReplacedKey(key), `${methodName}()`)
+    })
+    gettersContext = {
+      gettersAry,
+      gettersMethodsRoot,
+      paramGetters: getters,
+    }
+  }
 
   // replace '--' to '+', '--+' to '+', etc...
   formulaStr = formulaStr.replace(/-{2,}/g, match => (match.length % 2 === 0 ? '+' : '-'))
 
-  const textsMap = getVarsMap<string>(texts)
-  const getTextVarName = (value: number) => `__HANDLE_FORMULA_TEXT_${value}__`
-  const textsAry = varMapToArray(textsMap)
-  textsAry.forEach(([key], idx) => {
-    formulaStr = formulaStr.replace(handleReplacedKey(key), getTextVarName(idx))
-  })
+  type TextxContext = {
+    textsAry: [string, string][]
+    textsMap: Map<string, string>
+    getTextVarName: (value: number) => string
+  }
+  let textsContext: TextxContext | null = null
 
-  if (gettersAry.length !== 0) {
-    methods[gettersMethodsRoot] = getters
+  if (texts) {
+    const textsMap = getVarsMap<string>(texts)
+    const getTextVarName = (value: number) => `__HANDLE_FORMULA_TEXT_${value}__`
+    const textsAry = varMapToArray(textsMap)
+    textsAry.forEach(([key], idx) => {
+      formulaStr = formulaStr.replace(handleReplacedKey(key), getTextVarName(idx))
+    })
+    textsContext = {
+      textsAry,
+      textsMap,
+      getTextVarName,
+    }
+  }
+
+  if (gettersContext && gettersContext.gettersAry.length !== 0) {
+    methods[gettersContext.gettersMethodsRoot] = gettersContext.paramGetters
   }
 
   if (!isNumberString(formulaStr)) {
     try {
       formulaStr = parseFormula(formulaStr, { ...vars, ...methods })?.toString() || '0'
     } catch (error) {
-      console.groupCollapsed('[parse formula] Unable to parse formula:')
-      console.warn(originalFormulaStr)
-      console.log('Current: ', formulaStr)
-      console.log({ vars, texts, methods, getters })
-      console.warn(error)
-      console.groupEnd()
+      CommonLogger.start('handleFormula', 'Unable to parse formula.')
+        .log({ originalFormulaStr, formulaStr, vars, texts, methods, getters })
+        .warn(error)
+        .end()
       return '0'
     }
   }
@@ -365,12 +391,14 @@ function handleFormula(
 
   formulaStr = trimBrackets(formulaStr)
 
-  textsAry.forEach(([key], idx) => {
-    formulaStr = formulaStr.replace(
-      new RegExp(getTextVarName(idx), 'g'),
-      textsMap.get(key) as string
-    )
-  })
+  if (textsContext) {
+    textsContext.textsAry.forEach(([key], idx) => {
+      formulaStr = formulaStr.replace(
+        new RegExp(textsContext.getTextVarName(idx), 'g'),
+        textsContext.textsMap.get(key) as string
+      )
+    })
+  }
 
   return formulaStr
 }
@@ -408,9 +436,10 @@ function computeFormula(
       const body = parseFormula(formula, {}, { compile: paramName }) as string
       func = new Function(paramName, `return (${body});`) as AnyFunction
     } catch (err) {
-      console.warn('[computeFormula] unknown error when try to create function.')
-      console.log(formula)
-      console.log(err)
+      CommonLogger.start('computeFormula', 'Unknown error when try to create function.')
+        .log(formula)
+        .warn(err)
+        .end()
       func = () => defaultValue
     }
     _computeFormulaCaches.set(formula, func)
@@ -418,7 +447,10 @@ function computeFormula(
   }
   try {
     return handle(vars) as unknown
-  } catch (err) {
+  } catch (err: unknown) {
+    CommonLogger.start('computeFormula', 'Unexpected error when calling compiled function.')
+      .warn(err)
+      .end()
     return defaultValue
   }
 }

@@ -67,7 +67,7 @@ const resetBatchMoveState = () => {
 }
 
 const toggleBatchMoveTarget = (equip: CharacterEquipment) => {
-  if (Items.equal(batchMoveState.moveTarget, equip)) {
+  if (Items.equals(batchMoveState.moveTarget, equip)) {
     batchMoveState.moveTarget = null
   } else {
     batchMoveState.moveTarget = equip
@@ -80,7 +80,7 @@ const handleBatchMove = () => {
   )
   let insertIdx = 0
   if (batchMoveState.moveTarget !== null) {
-    insertIdx = equipments.value.findIndex(equip => Items.equal(equip, batchMoveState.moveTarget!))
+    insertIdx = equipments.value.findIndex(equip => Items.equals(equip, batchMoveState.moveTarget!))
   }
   if (insertIdx > -1) {
     newEquipments.splice(insertIdx, 0, ...batchMoveState.selectedEquipments)

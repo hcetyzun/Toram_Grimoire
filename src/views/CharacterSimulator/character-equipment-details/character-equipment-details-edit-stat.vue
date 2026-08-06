@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Draggable from 'vuedraggable'
 
 import { CharacterEquipment } from '@/lib/Character/CharacterEquipment'
@@ -14,9 +15,18 @@ interface Props {
   equipment: CharacterEquipment
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
-const isEditing = ref(false)
+const { t } = useI18n()
+
+const isEditing = ref(props.equipment.stats.length === 0)
+
+watch(
+  () => props.equipment,
+  () => {
+    isEditing.value = props.equipment.stats.length === 0
+  }
+)
 
 const getStatKey = (stat: StatRestriction) => stat.statId
 
@@ -44,6 +54,7 @@ const getStatKey = (stat: StatRestriction) => stat.statId
     </div>
     <div v-if="!isEditing">
       <Draggable
+        v-if="equipment.stats.length > 0"
         v-model="
           // eslint-disable-next-line vue/no-mutating-props
           equipment.stats
@@ -73,6 +84,9 @@ const getStatKey = (stat: StatRestriction) => stat.statId
           </EquipmentPropInputContainer>
         </template>
       </Draggable>
+      <div v-else class="text-primary-60 py-2 text-sm">
+        {{ t('character-simulator.select-stats.stat-empty-tips') }}
+      </div>
     </div>
     <CharacterEquipmentDetailsSelectStat v-else :equipment="equipment" />
   </div>

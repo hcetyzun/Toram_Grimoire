@@ -210,7 +210,7 @@
         <div v-if="statsSearchResult.length !== 0" class="divide-primary-20 divide-y">
           <div
             v-for="stat in statsSearchResult"
-            :key="stat.origin.statId(stat.type)"
+            :key="stat.origin.getStatId(stat.type)"
             class="hover:bg-primary-30/10 px-2 py-1 duration-200"
             @click="selectStat(stat)"
           >
@@ -300,7 +300,7 @@ const currentBookmarkItem = computed(() => {
       break
     case SearchModes.Stat:
       item.payload = `${SearchModes.Stat}:${modes[SearchModes.Stat].currentStats
-        .map(stat => stat.origin.statId(stat.type))
+        .map(stat => stat.origin.getStatId(stat.type))
         .join(',')}`
       break
     case SearchModes.ItemLevel:

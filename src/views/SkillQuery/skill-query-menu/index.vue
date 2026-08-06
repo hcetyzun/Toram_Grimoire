@@ -71,7 +71,7 @@
             </div>
           </div>
         </div>
-        <div class="text-primary-30 mt-2 text-sm">
+        <div class="text-primary-30 mt-3 text-sm">
           {{ t('skill-query.main-menu-title-common') }}
         </div>
         <div class="mt-2 space-y-2">
@@ -91,7 +91,7 @@
             />
           </div>
         </div>
-        <div class="mt-3">
+        <div class="mt-4">
           <div class="text-primary-30 text-sm">
             {{ t('skill-query.formula-display-mode.title') }}
           </div>

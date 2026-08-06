@@ -23,7 +23,7 @@ class RegistletCategory<ItemBase extends RegistletItemBase = RegistletItemBase> 
     this.items = []
   }
 
-  appendItem(item: ItemBase) {
+  appendItem(item: ItemBase): void {
     this.items.push(markRaw(item))
   }
 }

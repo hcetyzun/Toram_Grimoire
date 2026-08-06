@@ -33,7 +33,7 @@ class FoodBase {
     this.base = base
     this.amount = amount
     this.negative = negative
-    this.foodBaseId = this.base.statId(StatTypes.Constant)
+    this.foodBaseId = this.base.getStatId(StatTypes.Constant)
   }
   getStat(level: number) {
     const value = Math.min(level, 5) * this.amount[0] + Math.max(level - 5, 0) * this.amount[1]

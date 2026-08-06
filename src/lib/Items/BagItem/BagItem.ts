@@ -25,6 +25,11 @@ interface BagItemExtra {
   caption?: string
 }
 
+interface RelatedCrystalsResult {
+  enhancers: BagCrystal[]
+  prependeds: BagCrystal[]
+}
+
 abstract class BagItem {
   id: string
   name: string
@@ -50,7 +55,7 @@ abstract class BagItem {
     return obtain
   }
 
-  appendStat(baseId: string, value: number, type: StatTypes, restriction: string) {
+  appendStat(baseId: string, value: number, type: StatTypes, restriction: string): void {
     const statBase = Grimoire.Character.findStatBase(baseId)
     if (!statBase) {
       CommonLogger.warn('Character', "Can't find stat-base with id: " + baseId)
@@ -99,7 +104,7 @@ class BagEquipment extends BagItem {
     return this.recipe
   }
 
-  isWeapon() {
+  isWeapon(): boolean {
     return this.category >= 0 && this.category < 200
   }
 }
@@ -116,20 +121,21 @@ class BagCrystal extends BagItem {
     this.bossCategory = bossCategory
     this.enhancer = null
   }
-  setEnhancer(name: string) {
+
+  setEnhancer(name: string): void {
     this.enhancer = name
   }
 
-  get crystalBaseIconPath() {
+  get crystalBaseIconPath(): string {
     const type = ['weapon', 'body', 'additional', 'special', 'normal'][this.category]
     return type ? Images.crystalIcons.get(type) : '#'
   }
 
-  get crystalIconPath() {
+  get crystalIconPath(): string {
     return this.enhancer ? Images.crystalIcons.get('enhance') : this.crystalBaseIconPath
   }
 
-  getRelatedCrystals(crystals: BagCrystal[]) {
+  getRelatedCrystals(crystals: BagCrystal[]): RelatedCrystalsResult {
     const nameMap = new Map<string, BagCrystal>()
     const enhancerMap = new Map<string, BagCrystal>()
     crystals.forEach(crystal => {
@@ -174,7 +180,7 @@ class BagCrystal extends BagItem {
     }
   }
 
-  getRelatedCrystalsLists(crystals: BagCrystal[]) {
+  getRelatedCrystalsLists(crystals: BagCrystal[]): BagCrystal[] {
     const relatedCrystals = this.getRelatedCrystals(crystals)
     return [...relatedCrystals.enhancers, ...relatedCrystals.prependeds]
   }

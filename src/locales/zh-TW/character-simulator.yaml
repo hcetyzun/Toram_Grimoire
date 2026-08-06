@@ -67,6 +67,7 @@ equipment-info:
   refining: 精鍊值
   stat-empty: 此裝備沒有能力
   crystal-empty: 此裝備沒有緞晶
+  trait-empty: 此裝備沒有裝備特性
 equipment-basic-editor:
   title: 裝備設定
   select-equipment-to-edit-tips: 選擇要編輯的裝備
@@ -79,6 +80,8 @@ equipment-basic-editor:
   label-delete: 刪除標籤
   label-empty-caption: 目前還沒有任何標籤～點選上方的按扭來新增一個標籤。
   only-one-element-stat-tips: 一件裝備只能擁有一個屬性，請確認編輯中的能力清單。
+select-stats:
+  stat-empty-tips: 此裝備還沒有能力，點選右上角的按鈕來新增。
 select-crystals:
   title: 選擇鍛晶
   show-crystal-stats: 顯示鍛晶能力
@@ -93,6 +96,11 @@ select-crystals:
     - 特殊裝備
     - 通用
   equipment-type-not-support-crystal-tips: 此裝備類型不支援鍛晶。
+  crystal-empty-tips: 此裝備還沒有鍛晶，點選右上角的按鈕來新增。
+select-trait:
+  trait-stack: 層數
+  equipment-type-not-support-trait-tips: 此裝備類型不支援裝備特性。
+  trait-empty-tips: 此裝備還沒有裝備特性，點選右上角的按鈕來新增。
 skill-build:
   title: 技能
   passive-skills: 被動技能
@@ -161,6 +169,7 @@ character-stat-detail:
   equipped-with-text: 裝備為{equip}時
   crystal: 鍛晶
   food: 料理
+  trait: 裝備特性
   equipment-restriction-text:
     1h_sword: 主手｜單手劍
     2h_sword: 雙手劍

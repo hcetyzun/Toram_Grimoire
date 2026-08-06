@@ -44,7 +44,7 @@ export const useEquipmentsSearch = (filterEquipmentTypes: Ref<EquipmentTypes[]>)
         }
         _statOptions.push(
           markRaw({
-            id: stat.statId(type),
+            id: stat.getStatId(type),
             origin: stat,
             text: stat.title(type),
             type,

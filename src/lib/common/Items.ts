@@ -23,11 +23,11 @@ export abstract class Items {
     }
   }
 
-  static includes<Item extends CommonItem>(source: Item[], target: Item) {
+  static includes<Item extends CommonItem>(source: Item[], target: Item): boolean {
     return source.some(item => item.id === target.id)
   }
 
-  static equal<Item extends CommonItem | null>(source: Item, target: Item) {
+  static equals<Item extends CommonItem | null>(source: Item, target: Item): boolean {
     return source?.id === target?.id
   }
 }

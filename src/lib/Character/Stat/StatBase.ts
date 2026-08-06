@@ -6,10 +6,10 @@ import { StatTypes } from './enums'
 
 type StatValue = number | string
 
-interface StatShowData {
+export interface StatShowData<V extends StatValue> {
   result: string
   title: string
-  realValue: StatValue
+  originalValue: V
   value: string
   tail: string
 }
@@ -84,7 +84,7 @@ class StatBase {
     }
   }
 
-  getShowData(type: StatTypes, value: StatValue): StatShowData {
+  getShowData<V extends StatValue>(type: StatTypes, value: V): StatShowData<V> {
     let title = '',
       tail = ''
     if (type === StatTypes.Constant) {
@@ -102,13 +102,13 @@ class StatBase {
     return {
       result: this.show(type, value),
       title,
-      realValue: value,
+      originalValue: value,
       value: typeof value === 'number' ? value.toString() : value,
       tail,
     }
   }
 
-  showValue(type: StatTypes, value: StatValue, useDefaultTail = true) {
+  showValue(type: StatTypes, value: StatValue, useDefaultTail = true): string {
     const showData = this.getShowData(type, value)
     const prefix = typeof value !== 'number' || value >= 0 ? '+' : ''
     const displayedValue = typeof value === 'number' && value > 1 ? numberToFixed(value, 3) : value
@@ -129,12 +129,12 @@ class StatBase {
     return new StatComputed(this, type, value)
   }
 
-  checkBoolStat(type?: StatTypes) {
+  checkBoolStat(type?: StatTypes): boolean {
     type = type || StatTypes.Constant
     return type === StatTypes.Constant && this.constantDisplayFormat === '$t'
   }
 
-  statId(type: StatTypes) {
+  getStatId(type: StatTypes): string {
     const typeShorthand = {
       [StatTypes.Constant]: '',
       [StatTypes.Multiplier]: '%',
@@ -143,7 +143,7 @@ class StatBase {
     return `${this.baseId}${typeShorthand}`
   }
 
-  baseEqual(stat: StatElementBase, type: StatTypes) {
+  baseEquals(stat: StatElementBase, type: StatTypes) {
     return stat.base.baseId === this.baseId && stat.type === type
   }
 }
@@ -159,37 +159,34 @@ abstract class StatElementBase {
 
   abstract value: StatValue
 
+  abstract getShowData(): StatShowData<StatValue>
   abstract clone(): StatElementBase
 
   constructor(base: StatBase, type: StatTypes) {
     this.base = base
     this.type = type
-    this.statId = this.base.statId(this.type)
+    this.statId = this.base.getStatId(this.type)
   }
 
-  get valueId() {
+  get valueId(): string {
     return `${this.statId}_${this.value}`
   }
-  get isBoolStat() {
+  get isBoolStat(): boolean {
     return this.base.checkBoolStat(this.type)
   }
-  get title() {
+  get title(): string {
     return this.base.title(this.type)
   }
-  get baseId() {
+  get baseId(): string {
     return this.base.baseId
   }
 
-  show(value?: StatValue) {
+  show(value?: StatValue): string {
     return this.base.show(this.type, value ?? this.value)
   }
 
-  showValue(value?: StatValue) {
+  showValue(value?: StatValue): string {
     return this.base.showValue(this.type, value ?? this.value)
-  }
-
-  getShowData() {
-    return this.base.getShowData(this.type, this.value)
   }
 
   /**
@@ -206,6 +203,9 @@ abstract class StatElementBase {
   }
 }
 
+/**
+ * The stat with pure numerical value.
+ */
 class Stat extends StatElementBase {
   value: number
 
@@ -219,11 +219,19 @@ class Stat extends StatElementBase {
     return this.value
   }
 
+  getShowData(): StatShowData<number> {
+    return this.base.getShowData(this.type, this.value)
+  }
+
   clone(): Stat {
     return this.base.createStat(this.type, this.value)
   }
 }
 
+/**
+ * The stat with string value.
+ * (The string value needs to be converted into numbers through calculation)
+ */
 class StatComputed extends StatElementBase {
   value: string
 
@@ -234,6 +242,10 @@ class StatComputed extends StatElementBase {
 
   clone(): StatComputed {
     return this.base.createStatComputed(this.type, this.value)
+  }
+
+  getShowData(): StatShowData<string> {
+    return this.base.getShowData(this.type, this.value)
   }
 
   toStat(value: number): Stat {
