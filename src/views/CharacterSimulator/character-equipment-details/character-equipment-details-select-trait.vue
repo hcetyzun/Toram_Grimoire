@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 import Grimoire from '@/shared/Grimoire'
+import { fuzzySearch, prepareFuzzySearch } from '@/shared/utils/data/dataCommon.ts'
 
 import type { CharacterEquipment } from '@/lib/Character/CharacterEquipment'
 import type { EquipmentTraitItem } from '@/lib/EquipmentTrait'
@@ -24,6 +25,14 @@ const allTraitItems = Grimoire.EquipmentTrait.equipmentTraitItems
 
 const searchText = ref('')
 
+const currentTraitItems = computed(() => {
+  if (searchText.value === '') {
+    return allTraitItems
+  }
+  const text = prepareFuzzySearch(searchText.value)
+  return allTraitItems.filter(traitItem => fuzzySearch(text, traitItem.name))
+})
+
 const isTraitSelected = (item: EquipmentTraitItem) => {
   return props.equipment.trait?.base.id === item.id
 }
@@ -42,7 +51,7 @@ const toggleTrait = (item: EquipmentTraitItem) => {
       <div class="grow overflow-y-auto py-2">
         <CardRowsDelegation @row-clicked="toggleTrait">
           <CharacterEquipmentDetailsSelectTraitOption
-            v-for="item in allTraitItems"
+            v-for="item in currentTraitItems"
             :key="item.id"
             :trait-item="item"
             :selected="isTraitSelected(item)"
