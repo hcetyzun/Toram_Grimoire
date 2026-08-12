@@ -10,6 +10,7 @@ export const enum DataPathIds {
   Registlet = 8,
   Potion = 9,
   Quest = 10,
+  EquipmentTrait = 11,
 }
 
 function DataPath(id: DataPathIds): string {
@@ -36,6 +37,8 @@ function DataPath(id: DataPathIds): string {
       return 'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/potion/potion.csv'
     case DataPathIds.Quest:
       return 'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/quest/quest.csv'
+    case DataPathIds.EquipmentTrait:
+      return 'https://cdn.jsdelivr.net/gh/hcetyzun/Data-mirror@main/data/EquipmentTrait/EquipmentTrait.csv'
   }
 }
 
