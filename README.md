@@ -2,7 +2,7 @@
 
 This is the web tool of mobile game 🎲 "Toram Online ([Asobimo,Inc.](https://asobimo.com/))".
 
-⭐ Deployed on [here](https://cy-grimoire.netlify.app/).
+⭐ Deployed on [here](https://cy.hcetyzun.top/).
 
-- ☕ Author: Cyteria
-- 📧 Email: Cyteria.Grimoire@gmail.com
+- Original Author: [Cyteria](https://github.com/aishimeth2135)
+- Fork by GuYue ：Using CDN acceleration to help Chinese users access websites 
