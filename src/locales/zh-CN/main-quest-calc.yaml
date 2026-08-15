@@ -4,6 +4,7 @@ diary-rounds: 日记轮次
 select-start-section-title: 选择日记开始的章节
 common-settings-title: 基本设定
 select-skipped-sub-section-title: 选择要跳过的子章节
+no-skippable-sub-setion: 没有可以跳过的章节
 calc-result-title: 计算结果
 submit-items-title: 需要提交的道具
 skippable-sub-section-annotation: 可跳过
