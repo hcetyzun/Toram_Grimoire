@@ -149,10 +149,13 @@ const submitItemDatas = computed(() => {
         </div>
       </div>
     </div>
+    <div v-else class="text-gray-40 mt-3 px-1.5 text-sm">
+      {{ t('main-quest-calc.no-skippable-sub-setion') }}
+    </div>
     <div class="border-primary-30 text-primary-30 mt-6 border-b px-1.5 py-0.5 text-sm">
       {{ t('main-quest-calc.calc-result-title') }}
     </div>
-    <div class="mt-4 px-2">
+    <div class="mt-4 px-1.5">
       <div class="text-sm text-gray-50">
         {{ t('main-quest-calc.selected-section-range-title') }}
       </div>
